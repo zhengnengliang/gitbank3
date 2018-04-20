@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.dao.ItripHotelRoomMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.pojo.ItripHotelRoom" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hotelId" property="hotelid" jdbcType="BIGINT" />
+    <result column="roomTitle" property="roomtitle" jdbcType="VARCHAR" />
+    <result column="roomPrice" property="roomprice" jdbcType="DECIMAL" />
+    <result column="roomBedTypeId" property="roombedtypeid" jdbcType="BIGINT" />
+    <result column="isHavingBreakfast" property="ishavingbreakfast" jdbcType="INTEGER" />
+    <result column="payType" property="paytype" jdbcType="INTEGER" />
+    <result column="satisfaction" property="satisfaction" jdbcType="DECIMAL" />
+    <result column="isBook" property="isbook" jdbcType="INTEGER" />
+    <result column="isCancel" property="iscancel" jdbcType="INTEGER" />
+    <result column="isTimelyResponse" property="istimelyresponse" jdbcType="INTEGER" />
+    <result column="creationDate" property="creationdate" jdbcType="TIMESTAMP" />
+    <result column="createdBy" property="createdby" jdbcType="BIGINT" />
+    <result column="modifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, hotelId, roomTitle, roomPrice, roomBedTypeId, isHavingBreakfast, payType, satisfaction, 
+    isBook, isCancel, isTimelyResponse, creationDate, createdBy, modifyDate, modifiedBy
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from itrip_hotel_room
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from itrip_hotel_room
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.bdqn.pojo.ItripHotelRoom" >
+    insert into itrip_hotel_room (id, hotelId, roomTitle, 
+      roomPrice, roomBedTypeId, isHavingBreakfast, 
+      payType, satisfaction, isBook, 
+      isCancel, isTimelyResponse, creationDate, 
+      createdBy, modifyDate, modifiedBy
+      )
+    values (#{id,jdbcType=BIGINT}, #{hotelid,jdbcType=BIGINT}, #{roomtitle,jdbcType=VARCHAR}, 
+      #{roomprice,jdbcType=DECIMAL}, #{roombedtypeid,jdbcType=BIGINT}, #{ishavingbreakfast,jdbcType=INTEGER}, 
+      #{paytype,jdbcType=INTEGER}, #{satisfaction,jdbcType=DECIMAL}, #{isbook,jdbcType=INTEGER}, 
+      #{iscancel,jdbcType=INTEGER}, #{istimelyresponse,jdbcType=INTEGER}, #{creationdate,jdbcType=TIMESTAMP}, 
+      #{createdby,jdbcType=BIGINT}, #{modifydate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdqn.pojo.ItripHotelRoom" >
+    insert into itrip_hotel_room
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hotelid != null" >
+        hotelId,
+      </if>
+      <if test="roomtitle != null" >
+        roomTitle,
+      </if>
+      <if test="roomprice != null" >
+        roomPrice,
+      </if>
+      <if test="roombedtypeid != null" >
+        roomBedTypeId,
+      </if>
+      <if test="ishavingbreakfast != null" >
+        isHavingBreakfast,
+      </if>
+      <if test="paytype != null" >
+        payType,
+      </if>
+      <if test="satisfaction != null" >
+        satisfaction,
+      </if>
+      <if test="isbook != null" >
+        isBook,
+      </if>
+      <if test="iscancel != null" >
+        isCancel,
+      </if>
+      <if test="istimelyresponse != null" >
+        isTimelyResponse,
+      </if>
+      <if test="creationdate != null" >
+        creationDate,
+      </if>
+      <if test="createdby != null" >
+        createdBy,
+      </if>
+      <if test="modifydate != null" >
+        modifyDate,
+      </if>
+      <if test="modifiedby != null" >
+        modifiedBy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hotelid != null" >
+        #{hotelid,jdbcType=BIGINT},
+      </if>
+      <if test="roomtitle != null" >
+        #{roomtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="roomprice != null" >
+        #{roomprice,jdbcType=DECIMAL},
+      </if>
+      <if test="roombedtypeid != null" >
+        #{roombedtypeid,jdbcType=BIGINT},
+      </if>
+      <if test="ishavingbreakfast != null" >
+        #{ishavingbreakfast,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null" >
+        #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="satisfaction != null" >
+        #{satisfaction,jdbcType=DECIMAL},
+      </if>
+      <if test="isbook != null" >
+        #{isbook,jdbcType=INTEGER},
+      </if>
+      <if test="iscancel != null" >
+        #{iscancel,jdbcType=INTEGER},
+      </if>
+      <if test="istimelyresponse != null" >
+        #{istimelyresponse,jdbcType=INTEGER},
+      </if>
+      <if test="creationdate != null" >
+        #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedby != null" >
+        #{modifiedby,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.pojo.ItripHotelRoom" >
+    update itrip_hotel_room
+    <set >
+      <if test="hotelid != null" >
+        hotelId = #{hotelid,jdbcType=BIGINT},
+      </if>
+      <if test="roomtitle != null" >
+        roomTitle = #{roomtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="roomprice != null" >
+        roomPrice = #{roomprice,jdbcType=DECIMAL},
+      </if>
+      <if test="roombedtypeid != null" >
+        roomBedTypeId = #{roombedtypeid,jdbcType=BIGINT},
+      </if>
+      <if test="ishavingbreakfast != null" >
+        isHavingBreakfast = #{ishavingbreakfast,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null" >
+        payType = #{paytype,jdbcType=INTEGER},
+      </if>
+      <if test="satisfaction != null" >
+        satisfaction = #{satisfaction,jdbcType=DECIMAL},
+      </if>
+      <if test="isbook != null" >
+        isBook = #{isbook,jdbcType=INTEGER},
+      </if>
+      <if test="iscancel != null" >
+        isCancel = #{iscancel,jdbcType=INTEGER},
+      </if>
+      <if test="istimelyresponse != null" >
+        isTimelyResponse = #{istimelyresponse,jdbcType=INTEGER},
+      </if>
+      <if test="creationdate != null" >
+        creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        createdBy = #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null" >
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedby != null" >
+        modifiedBy = #{modifiedby,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.pojo.ItripHotelRoom" >
+    update itrip_hotel_room
+    set hotelId = #{hotelid,jdbcType=BIGINT},
+      roomTitle = #{roomtitle,jdbcType=VARCHAR},
+      roomPrice = #{roomprice,jdbcType=DECIMAL},
+      roomBedTypeId = #{roombedtypeid,jdbcType=BIGINT},
+      isHavingBreakfast = #{ishavingbreakfast,jdbcType=INTEGER},
+      payType = #{paytype,jdbcType=INTEGER},
+      satisfaction = #{satisfaction,jdbcType=DECIMAL},
+      isBook = #{isbook,jdbcType=INTEGER},
+      isCancel = #{iscancel,jdbcType=INTEGER},
+      isTimelyResponse = #{istimelyresponse,jdbcType=INTEGER},
+      creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      createdBy = #{createdby,jdbcType=BIGINT},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

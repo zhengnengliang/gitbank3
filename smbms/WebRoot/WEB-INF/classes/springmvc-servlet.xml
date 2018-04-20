@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+	<!-- 扫描控制器，开启对Controller注解的支持 -->
+	<context:component-scan base-package="cn.smbms.controller"/>
+	<!-- 1.context:component-scan标签是对包进行扫描，实现注释驱动Bean的定义，同时将Bean主动
+	注入容器中使用。即使spring mvc注解（@Controller等）的Bean生效，，话句话说，
+	若没有配置此标签，那么标注了spring mvc的bean仅仅是一个普通的java	Bean,而不是一个请求控制器。
+	 -->
+
+	<context:annotation-config/>
+	
+	
+	
+	<mvc:annotation-driven>
+		<!-- 装配消息转换器 -->
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+		        <property name="supportedMediaTypes">
+		            <list>
+		                <value>text/html;charset=UTF-8</value>
+		            </list>
+		        </property>
+		    </bean>
+		    
+		    
+		    
+		    <!-- 装配日期信息转换器 -->
+		    <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json</value>
+					</list>
+				</property>		    
+				<property name="features">
+					<list>
+						<!-- 日期格式转换器格式yyyy-MM-dd HH:mm:ss -->
+						<value>WriteDateUseDateFormat</value>
+					</list>
+				</property>
+		    </bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	<!-- Spring MVC拦截器 -->
+	<mvc:interceptors>  
+		<!--  使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求   -->
+		<!-- <bean class="com.bybo.aca.web.interceptor.Login"/> -->   
+    	<mvc:interceptor>
+	        <!-- 进行拦截：/**表示拦截所有controller -->
+    		<mvc:mapping path="/**"/>
+    		<bean class="cn.smbms.interceptor.EncodingInterceptor"/>
+    	</mvc:interceptor>  
+    	<!-- 访问拦截 -->
+	    <mvc:interceptor>  
+	        <mvc:mapping path="/**" />
+			<!-- 不进行拦截 -->
+	        <mvc:exclude-mapping path="/sys/**"/>
+			<mvc:exclude-mapping path="/statics/**"/>
+	        <bean class="cn.smbms.interceptor.AccessInterceptor"/>  
+    	</mvc:interceptor>
+	</mvc:interceptors>
+	 
+	<!-- 静态资源声明 -->
+	<mvc:resources location="/statics/" mapping="/statics/**"/>
+	
+	
+	
+	
+	
+	<!-- 完成视图对应 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<!-- 注释：-->
+	
+	
+	
+	<!-- 全局异常处理 -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.RuntimeException">error</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

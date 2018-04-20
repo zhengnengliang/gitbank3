@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.dao.ItripLabelDic.ItripLabelDicMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.pojo.ItripLabelDic" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="parentId" property="parentid" jdbcType="BIGINT" />
+    <result column="pic" property="pic" jdbcType="VARCHAR" />
+    <result column="creationDate" property="creationdate" jdbcType="TIMESTAMP" />
+    <result column="createdBy" property="createdby" jdbcType="BIGINT" />
+    <result column="modifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, value, description, parentId, pic, creationDate, createdBy, modifyDate, 
+    modifiedBy
+  </sql>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from itrip_label_dic
+    <where>
+    	<if test="name != null">
+    		name = CONCAT("%","#{name,jdbcType=VARCHAR}","%")
+    	</if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from itrip_label_dic
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!-- <insert id="insert" parameterType="com.bdqn.pojo.ItripLabelDic" >
+    insert into itrip_label_dic (id, name, value, 
+      description, parentId, pic, 
+      creationDate, createdBy, modifyDate, 
+      modifiedBy)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{parentid,jdbcType=BIGINT}, #{pic,jdbcType=VARCHAR}, 
+      #{creationdate,jdbcType=TIMESTAMP}, #{createdby,jdbcType=BIGINT}, #{modifydate,jdbcType=TIMESTAMP}, 
+      #{modifiedby,jdbcType=BIGINT})
+  </insert> -->
+  <insert id="insertSelective" parameterType="com.bdqn.pojo.ItripLabelDic" >
+    insert into itrip_label_dic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="pic != null" >
+        pic,
+      </if>
+      <if test="creationdate != null" >
+        creationDate,
+      </if>
+      <if test="createdby != null" >
+        createdBy,
+      </if>
+      <if test="modifydate != null" >
+        modifyDate,
+      </if>
+      <if test="modifiedby != null" >
+        modifiedBy,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=BIGINT},
+      </if>
+      <if test="pic != null" >
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="creationdate != null" >
+        #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedby != null" >
+        #{modifiedby,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.pojo.ItripLabelDic" >
+    update itrip_label_dic
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=BIGINT},
+      </if>
+      <if test="pic != null" >
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="creationdate != null" >
+        creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        createdBy = #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null" >
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedby != null" >
+        modifiedBy = #{modifiedby,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+ <!--  <update id="updateByPrimaryKey" parameterType="com.bdqn.pojo.ItripLabelDic" >
+    update itrip_label_dic
+    set name = #{name,jdbcType=VARCHAR},
+      value = #{value,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=BIGINT},
+      pic = #{pic,jdbcType=VARCHAR},
+      creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      createdBy = #{createdby,jdbcType=BIGINT},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update> -->
+</mapper>

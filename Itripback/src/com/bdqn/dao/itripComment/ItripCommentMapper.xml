@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.dao.itripComment.ItripCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.pojo.ItripComment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hotelId" property="hotelid" jdbcType="BIGINT" />
+    <result column="productId" property="productid" jdbcType="BIGINT" />
+    <result column="orderId" property="orderid" jdbcType="BIGINT" />
+    <result column="productType" property="producttype" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="BIGINT" />
+    <result column="isHavingImg" property="ishavingimg" jdbcType="INTEGER" />
+    <result column="positionScore" property="positionscore" jdbcType="INTEGER" />
+    <result column="facilitiesScore" property="facilitiesscore" jdbcType="INTEGER" />
+    <result column="serviceScore" property="servicescore" jdbcType="INTEGER" />
+    <result column="hygieneScore" property="hygienescore" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="INTEGER" />
+    <result column="tripMode" property="tripmode" jdbcType="BIGINT" />
+    <result column="isOk" property="isok" jdbcType="INTEGER" />
+    <result column="creationDate" property="creationdate" jdbcType="TIMESTAMP" />
+    <result column="createdBy" property="createdby" jdbcType="BIGINT" />
+    <result column="modifyDate" property="modifydate" jdbcType="TIMESTAMP" />
+    <result column="modifiedBy" property="modifiedby" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.bdqn.pojo.ItripComment" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, hotelId, productId, orderId, productType, userId, isHavingImg, positionScore, 
+    facilitiesScore, serviceScore, hygieneScore, score, tripMode, isOk, creationDate, 
+    createdBy, modifyDate, modifiedBy
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByName" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from itrip_comment
+    <where>
+    	<if test="content != null and content !=''">
+    		content = CONCAT('%',#{content},'%')
+    	</if>
+     </where>
+  </select>
+  <select id="selectById" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from itrip_comment
+    <where>
+    	<if test="id != null and id !=''">
+    		id = #{id}
+    	</if>
+     </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from itrip_comment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!-- <insert id="insert" parameterType="com.bdqn.pojo.ItripComment" >
+    insert into itrip_comment (id, hotelId, productId, 
+      orderId, productType, userId, 
+      isHavingImg, positionScore, facilitiesScore, 
+      serviceScore, hygieneScore, score, 
+      tripMode, isOk, creationDate, 
+      createdBy, modifyDate, modifiedBy, 
+      content)
+    values (#{id,jdbcType=BIGINT}, #{hotelid,jdbcType=BIGINT}, #{productid,jdbcType=BIGINT}, 
+      #{orderid,jdbcType=BIGINT}, #{producttype,jdbcType=INTEGER}, #{userid,jdbcType=BIGINT}, 
+      #{ishavingimg,jdbcType=INTEGER}, #{positionscore,jdbcType=INTEGER}, #{facilitiesscore,jdbcType=INTEGER}, 
+      #{servicescore,jdbcType=INTEGER}, #{hygienescore,jdbcType=INTEGER}, #{score,jdbcType=INTEGER}, 
+      #{tripmode,jdbcType=BIGINT}, #{isok,jdbcType=INTEGER}, #{creationdate,jdbcType=TIMESTAMP}, 
+      #{createdby,jdbcType=BIGINT}, #{modifydate,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=BIGINT}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert> -->
+  <insert id="insertSelective" parameterType="com.bdqn.pojo.ItripComment" >
+    insert into itrip_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hotelid != null" >
+        hotelId,
+      </if>
+      <if test="productid != null" >
+        productId,
+      </if>
+      <if test="orderid != null" >
+        orderId,
+      </if>
+      <if test="producttype != null" >
+        productType,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="ishavingimg != null" >
+        isHavingImg,
+      </if>
+      <if test="positionscore != null" >
+        positionScore,
+      </if>
+      <if test="facilitiesscore != null" >
+        facilitiesScore,
+      </if>
+      <if test="servicescore != null" >
+        serviceScore,
+      </if>
+      <if test="hygienescore != null" >
+        hygieneScore,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="tripmode != null" >
+        tripMode,
+      </if>
+      <if test="isok != null" >
+        isOk,
+      </if>
+      <if test="creationdate != null" >
+        creationDate,
+      </if>
+      <if test="createdby != null" >
+        createdBy,
+      </if>
+      <if test="modifydate != null" >
+        modifyDate,
+      </if>
+      <if test="modifiedby != null" >
+        modifiedBy,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hotelid != null" >
+        #{hotelid,jdbcType=BIGINT},
+      </if>
+      <if test="productid != null" >
+        #{productid,jdbcType=BIGINT},
+      </if>
+      <if test="orderid != null" >
+        #{orderid,jdbcType=BIGINT},
+      </if>
+      <if test="producttype != null" >
+        #{producttype,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ishavingimg != null" >
+        #{ishavingimg,jdbcType=INTEGER},
+      </if>
+      <if test="positionscore != null" >
+        #{positionscore,jdbcType=INTEGER},
+      </if>
+      <if test="facilitiesscore != null" >
+        #{facilitiesscore,jdbcType=INTEGER},
+      </if>
+      <if test="servicescore != null" >
+        #{servicescore,jdbcType=INTEGER},
+      </if>
+      <if test="hygienescore != null" >
+        #{hygienescore,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="tripmode != null" >
+        #{tripmode,jdbcType=BIGINT},
+      </if>
+      <if test="isok != null" >
+        #{isok,jdbcType=INTEGER},
+      </if>
+      <if test="creationdate != null" >
+        #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null" >
+        #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedby != null" >
+        #{modifiedby,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.pojo.ItripComment" >
+    update itrip_comment
+    <set >
+      <if test="hotelid != null" >
+        hotelId = #{hotelid,jdbcType=BIGINT},
+      </if>
+      <if test="productid != null" >
+        productId = #{productid,jdbcType=BIGINT},
+      </if>
+      <if test="orderid != null" >
+        orderId = #{orderid,jdbcType=BIGINT},
+      </if>
+      <if test="producttype != null" >
+        productType = #{producttype,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ishavingimg != null" >
+        isHavingImg = #{ishavingimg,jdbcType=INTEGER},
+      </if>
+      <if test="positionscore != null" >
+        positionScore = #{positionscore,jdbcType=INTEGER},
+      </if>
+      <if test="facilitiesscore != null" >
+        facilitiesScore = #{facilitiesscore,jdbcType=INTEGER},
+      </if>
+      <if test="servicescore != null" >
+        serviceScore = #{servicescore,jdbcType=INTEGER},
+      </if>
+      <if test="hygienescore != null" >
+        hygieneScore = #{hygienescore,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="tripmode != null" >
+        tripMode = #{tripmode,jdbcType=BIGINT},
+      </if>
+      <if test="isok != null" >
+        isOk = #{isok,jdbcType=INTEGER},
+      </if>
+      <if test="creationdate != null" >
+        creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        createdBy = #{createdby,jdbcType=BIGINT},
+      </if>
+      <if test="modifydate != null" >
+        modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedby != null" >
+        modifiedBy = #{modifiedby,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+ <!--  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bdqn.pojo.ItripComment" >
+    update itrip_comment
+    set hotelId = #{hotelid,jdbcType=BIGINT},
+      productId = #{productid,jdbcType=BIGINT},
+      orderId = #{orderid,jdbcType=BIGINT},
+      productType = #{producttype,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=BIGINT},
+      isHavingImg = #{ishavingimg,jdbcType=INTEGER},
+      positionScore = #{positionscore,jdbcType=INTEGER},
+      facilitiesScore = #{facilitiesscore,jdbcType=INTEGER},
+      serviceScore = #{servicescore,jdbcType=INTEGER},
+      hygieneScore = #{hygienescore,jdbcType=INTEGER},
+      score = #{score,jdbcType=INTEGER},
+      tripMode = #{tripmode,jdbcType=BIGINT},
+      isOk = #{isok,jdbcType=INTEGER},
+      creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      createdBy = #{createdby,jdbcType=BIGINT},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=BIGINT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update> -->
+  <!-- <update id="updateByPrimaryKey" parameterType="com.bdqn.pojo.ItripComment" >
+    update itrip_comment
+    set hotelId = #{hotelid,jdbcType=BIGINT},
+      productId = #{productid,jdbcType=BIGINT},
+      orderId = #{orderid,jdbcType=BIGINT},
+      productType = #{producttype,jdbcType=INTEGER},
+      userId = #{userid,jdbcType=BIGINT},
+      isHavingImg = #{ishavingimg,jdbcType=INTEGER},
+      positionScore = #{positionscore,jdbcType=INTEGER},
+      facilitiesScore = #{facilitiesscore,jdbcType=INTEGER},
+      serviceScore = #{servicescore,jdbcType=INTEGER},
+      hygieneScore = #{hygienescore,jdbcType=INTEGER},
+      score = #{score,jdbcType=INTEGER},
+      tripMode = #{tripmode,jdbcType=BIGINT},
+      isOk = #{isok,jdbcType=INTEGER},
+      creationDate = #{creationdate,jdbcType=TIMESTAMP},
+      createdBy = #{createdby,jdbcType=BIGINT},
+      modifyDate = #{modifydate,jdbcType=TIMESTAMP},
+      modifiedBy = #{modifiedby,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update> -->
+</mapper>

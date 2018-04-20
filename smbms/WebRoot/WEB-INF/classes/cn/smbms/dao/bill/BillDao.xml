@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//www.mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.smbms.dao.bill.BillDao">
+
+    <!--   添加订单 -->
+    <insert id="add" parameterType="Bill">
+      insert into smbms_bill (billCode,productName,productDesc,
+		productUnit,productCount,totalPrice,isPayment,providerId,createdBy,creationDate)
+		
+		values{#{billCode},#{productName},#{productDesc},#{productUnit},
+			#{productCount},#{totalPrice},#{isPayment},#{providerId},#{createdBy},#{creationDate})
+    </insert>
+ 
+       <!-- 通过查询条件获取供应商列表-模糊查询-getBillList????????????????????????????????????????? -->
+       <select id="getBillList"  parameterType="Bill" resultType="Bill">
+       
+          select b.*,p.proName as providerName from smbms_bill b, 
+          smbms_provider p where b.providerId = p.id
+     
+	          <if test="productName !=null and productName  !=''">
+	              and productName like #{productName}
+	          </if>
+	          
+	          <if test="providerId !=null   and providerId !=0">
+	          and providerId = #{providerId}
+	          </if>
+	          <if test="isPayment !=null and isPayment !=0 ">
+	          and isPayment = #{isPayment}
+	          </if> 
+	        
+	     
+       </select>
+      <!-- 通过delId删除Bill -->
+      <delete id="deleteBillById" parameterType="Integer">
+      delete from smbms_bill where id=#{delId}
+      </delete>
+          
+      <!--  通过billId获取Bill   --> 
+     <select id="getBillById" resultType="Bill" parameterType="Integer">
+     select b.*,p.proName as providerName from smbms_bill b, smbms_provider p
+		where b.providerId = p.id and b.id= #{id}
+     </select>   
+       
+       <!-- 修改订单信息  -->   
+       <update id="modify" parameterType="Bill">
+             update smbms_bill set productName=#{productName},
+					productDesc=#{productDesc},productUnit=#{productUnit},productCount=#{productCount},
+					totalPrice=#{totalPrice},isPayment=#{isPayment},providerId=#{providerId},
+					modifyBy=#{modifyBy},modifyDate=#{modifyDate} 
+					where id = #{id}
+       </update>   
+          
+       <!-- 根据供应商ID查询订单数量 -->
+       <select id="getBillCountByProviderId"  resultType="Integer" parameterType="Integer">
+        select count(1) as billCount from smbms_bill where 
+						providerId = #{providerId}
+       </select>
+       
+</mapper>
